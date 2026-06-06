@@ -36,16 +36,16 @@ export default function RecordAudioPage() {
     <div className="p-8 md:p-10 max-w-3xl mx-auto w-full">
       <button 
         onClick={() => router.push("/meetings/new")} 
-        className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium mb-8"
+        className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium mb-8 dark:hover:text-slate-200"
       >
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
         Back
       </button>
 
       <div className="mb-10">
-        <h2 className="text-2xl font-semibold text-slate-900 tracking-tight">Audio Input</h2>
+        <h2 className="text-2xl font-semibold text-slate-900 dark:text-white tracking-tight">Audio Input</h2>
         <p className="text-[14px] text-slate-500 mt-1.5">
-          <strong className="text-primary">{meetingForm?.title || "New Meeting"}</strong> · {meetingForm?.date || "Today"}
+          <strong className="text-blue-600 dark:text-blue-400">{meetingForm?.title || "New Meeting"}</strong> · {meetingForm?.date || "Today"}
         </p>
       </div>
 
@@ -57,19 +57,19 @@ export default function RecordAudioPage() {
           <Card 
             key={opt.key} 
             onClick={() => setMode(opt.key)}
-            className={`cursor-pointer border-2 transition-all p-6 ${mode === opt.key ? 'border-primary bg-primary/5 shadow-sm' : 'border-slate-100 hover:border-slate-200'}`}
+            className={`cursor-pointer border-2 transition-all p-6 ${mode === opt.key ? 'border-blue-600 bg-blue-600/5 dark:border-blue-500 dark:bg-blue-500/10 shadow-sm' : 'border-slate-100 hover:border-slate-200 dark:border-slate-800 dark:hover:border-slate-700'}`}
           >
-            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke={mode === opt.key ? "currentColor" : "#94a3b8"} strokeWidth="1.8" className={`mb-3 ${mode === opt.key ? 'text-primary' : ''}`}>
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke={mode === opt.key ? "currentColor" : "#94a3b8"} strokeWidth="1.8" className={`mb-3 ${mode === opt.key ? 'text-blue-600 dark:text-blue-400' : ''}`}>
               <path strokeLinecap="round" strokeLinejoin="round" d={opt.icon} />
             </svg>
-            <p className={`text-[15px] font-semibold mb-1 ${mode === opt.key ? 'text-primary' : 'text-slate-900'}`}>{opt.label}</p>
+            <p className={`text-[15px] font-semibold mb-1 ${mode === opt.key ? 'text-blue-600 dark:text-blue-400' : 'text-slate-900 dark:text-white'}`}>{opt.label}</p>
             <p className="text-[13px] text-slate-500">{opt.desc}</p>
           </Card>
         ))}
       </div>
 
       {mode === "record" && (
-        <Card className="p-10 border-slate-100 text-center shadow-sm max-w-lg mx-auto">
+        <Card className="p-10 border-slate-100 dark:border-slate-800 text-center shadow-sm max-w-lg mx-auto">
           {isRecording && (
             <div className="flex justify-center gap-1.5 mb-6 h-[40px] items-end">
               {[1, 2, 3, 4, 5].map(i => (
@@ -82,13 +82,13 @@ export default function RecordAudioPage() {
             </div>
           )}
           
-          <p className={`font-mono text-5xl font-medium mb-8 ${isRecording ? 'text-red-500' : 'text-slate-900'}`}>
+          <p className={`font-mono text-5xl font-medium mb-8 ${isRecording ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
             {fmt(elapsed)}
           </p>
           
           <button 
             onClick={isRecording ? stopRecording : startRecording} 
-            className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto transition-transform hover:scale-105 shadow-md ${isRecording ? 'bg-red-500 hover:bg-red-600' : 'bg-primary hover:bg-primary/90'}`}
+            className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto transition-transform hover:scale-105 shadow-md ${isRecording ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700'}`}
           >
             {isRecording ? (
               <svg width="24" height="24" fill="white" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" /></svg>
@@ -106,7 +106,7 @@ export default function RecordAudioPage() {
           onDragLeave={() => setDragging(false)}
           onDrop={e => { e.preventDefault(); setDragging(false); handleFile(e.dataTransfer.files[0]) }}
           onClick={() => fileRef.current?.click()}
-          className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all max-w-lg mx-auto ${dragging ? 'border-primary bg-primary/5' : uploaded ? 'border-emerald-500 bg-emerald-50' : 'border-indigo-200 bg-indigo-50/50 hover:bg-indigo-50'}`}
+          className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all max-w-lg mx-auto ${dragging ? 'border-blue-600 bg-blue-600/5' : uploaded ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-500/10' : 'border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-900/10 hover:bg-indigo-50 dark:hover:bg-indigo-900/20'}`}
         >
           <input ref={fileRef} type="file" accept="audio/*" onChange={e => handleFile(e.target.files?.[0])} className="hidden" />
           {uploaded ? (
@@ -114,16 +114,16 @@ export default function RecordAudioPage() {
               <svg width="42" height="42" fill="none" viewBox="0 0 24 24" stroke="#10b981" strokeWidth="1.8" className="mx-auto mb-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <p className="text-[16px] font-semibold text-emerald-800">{uploaded}</p>
-              <p className="text-sm text-emerald-600 mt-1.5">File ready to process</p>
+              <p className="text-[16px] font-semibold text-emerald-800 dark:text-emerald-400">{uploaded}</p>
+              <p className="text-sm text-emerald-600 dark:text-emerald-500 mt-1.5">File ready to process</p>
             </>
           ) : (
             <>
-              <svg width="42" height="42" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" className="mx-auto mb-4 text-indigo-400">
+              <svg width="42" height="42" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" className="mx-auto mb-4 text-indigo-400 dark:text-indigo-500">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
-              <p className="text-[16px] font-semibold text-indigo-900">Drop audio file here</p>
-              <p className="text-sm text-indigo-500 mt-1.5">or click to browse · MP3, WAV, M4A, OGG</p>
+              <p className="text-[16px] font-semibold text-indigo-900 dark:text-indigo-300">Drop audio file here</p>
+              <p className="text-sm text-indigo-500 dark:text-indigo-400 mt-1.5">or click to browse · MP3, WAV, M4A, OGG</p>
             </>
           )}
         </div>

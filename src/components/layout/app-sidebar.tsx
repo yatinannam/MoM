@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Avatar } from "@/components/ui/avatar"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 export function AppSidebar() {
   const pathname = usePathname()
@@ -31,7 +32,7 @@ export function AppSidebar() {
     <aside className="w-60 bg-slate-950 flex flex-col py-6 shrink-0 h-full text-slate-400 font-sora">
       <div className="px-5 pb-7 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-md shadow-primary/20">
+          <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center shadow-md shadow-blue-600/20">
             <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
@@ -47,7 +48,7 @@ export function AppSidebar() {
             <button 
               key={item.key} 
               onClick={() => router.push(item.key)} 
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-left text-sm ${isActive ? 'bg-primary/20 text-indigo-200 font-semibold shadow-sm' : 'hover:bg-white/5 hover:text-slate-300'}`}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-left text-sm ${isActive ? 'bg-blue-600/20 text-blue-200 font-semibold shadow-sm' : 'hover:bg-white/5 hover:text-slate-300'}`}
             >
               <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
@@ -58,9 +59,12 @@ export function AppSidebar() {
         })}
       </nav>
 
-      <div className="px-4 pt-4 pb-2 border-t border-white/10">
-        <div className="flex items-center gap-3 mb-4 px-2">
-          <Avatar className="h-8 w-8 bg-indigo-200 text-indigo-900 font-bold font-mono">
+      <div className="px-4 pt-4 pb-2 border-t border-white/10 flex flex-col gap-2">
+        <div className="flex items-center justify-between px-2 mb-2">
+          <ThemeToggle />
+        </div>
+        <div className="flex items-center gap-3 mb-2 px-2">
+          <Avatar className="h-8 w-8 bg-blue-200 text-blue-900 font-bold font-mono">
             {email.slice(0, 2).toUpperCase()}
           </Avatar>
           <div className="overflow-hidden">

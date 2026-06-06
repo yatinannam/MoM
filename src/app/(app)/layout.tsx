@@ -5,7 +5,7 @@ import { MeetingProvider } from "@/components/meeting/meeting-context"
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen bg-slate-50/50 font-sora">
+    <div className="flex h-screen bg-slate-50/50 dark:bg-slate-950 font-sora">
       <AppSidebar />
       <main className="flex-1 flex flex-col overflow-y-auto">
         <MeetingProvider>

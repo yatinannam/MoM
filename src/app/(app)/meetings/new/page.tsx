@@ -36,55 +36,55 @@ export default function NewMeetingPage() {
     <div className="p-8 md:p-10 max-w-3xl mx-auto w-full">
       <button 
         onClick={() => router.push("/dashboard")} 
-        className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium mb-8"
+        className="flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-colors text-sm font-medium mb-8"
       >
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
         Back to dashboard
       </button>
 
       <div className="mb-10">
-        <h2 className="text-2xl font-semibold text-slate-900 tracking-tight">Create New Meeting</h2>
-        <p className="text-[14px] text-slate-500 mt-1.5">Set up your meeting details before recording or uploading audio.</p>
+        <h2 className="text-2xl font-semibold text-slate-900 dark:text-white tracking-tight">Create New Meeting</h2>
+        <p className="text-[14px] text-slate-500 dark:text-slate-400 mt-1.5">Set up your meeting details before recording or uploading audio.</p>
       </div>
 
-      <div className="space-y-6 bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+      <div className="space-y-6 bg-white dark:bg-slate-900/80 p-8 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">Meeting Title <span className="text-red-500">*</span></label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Meeting Title <span className="text-red-500">*</span></label>
           <Input 
             value={title} 
             onChange={(e) => setTitle(e.target.value)} 
             placeholder="e.g. Q2 Sprint Planning"
-            className="h-12 px-4 rounded-xl text-[14px] border-slate-200"
+            className="h-12 px-4 rounded-xl text-[14px] border-slate-200 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white focus-visible:ring-blue-600"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">Date</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Date</label>
           <Input 
             type="date"
             value={date} 
             onChange={(e) => setDate(e.target.value)} 
-            className="h-12 px-4 rounded-xl text-[14px] border-slate-200"
+            className="h-12 px-4 rounded-xl text-[14px] border-slate-200 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white focus-visible:ring-blue-600"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">Participants</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Participants</label>
           <Input 
             value={participants} 
             onChange={(e) => setParticipants(e.target.value)} 
             placeholder="e.g. Aryan, Priya, Rahul"
-            className="h-12 px-4 rounded-xl text-[14px] border-slate-200"
+            className="h-12 px-4 rounded-xl text-[14px] border-slate-200 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white focus-visible:ring-blue-600"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">Agenda / Description</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Agenda / Description</label>
           <Textarea 
             value={agenda} 
             onChange={(e) => setAgenda(e.target.value)} 
             placeholder="What topics will be covered?"
-            className="min-h-[120px] p-4 rounded-xl text-[14px] border-slate-200 resize-y"
+            className="min-h-[120px] p-4 rounded-xl text-[14px] border-slate-200 dark:border-slate-700 dark:bg-slate-800/50 dark:text-white resize-y focus-visible:ring-blue-600"
           />
         </div>
 

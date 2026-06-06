@@ -35,8 +35,8 @@ export default function DashboardPage() {
     <div className="p-8 md:p-10 max-w-6xl mx-auto w-full">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
         <div>
-          <h2 className="text-2xl font-semibold text-slate-900 tracking-tight">Your Meetings</h2>
-          <p className="text-[14px] text-slate-500 mt-1">{meetings.length} meeting records saved</p>
+          <h2 className="text-2xl font-semibold text-slate-900 dark:text-white tracking-tight">Your Meetings</h2>
+          <p className="text-[14px] text-slate-500 dark:text-slate-400 mt-1">{meetings.length} meeting records saved</p>
         </div>
         <Button onClick={handleNewMeeting} className="h-11 px-5 rounded-xl font-semibold shadow-sm">
           <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" className="mr-2">
@@ -60,7 +60,7 @@ export default function DashboardPage() {
           value={search} 
           onChange={e => setSearch(e.target.value)}
           placeholder="Search meetings or participants…" 
-          className="pl-12 h-12 rounded-xl bg-white border-slate-200 shadow-sm text-[14px]"
+          className="pl-12 h-12 rounded-xl bg-white dark:bg-slate-900/80 border-slate-200 dark:border-slate-800 shadow-sm text-[14px] dark:text-slate-200 dark:placeholder:text-slate-500 focus-visible:ring-blue-600"
         />
       </div>
 

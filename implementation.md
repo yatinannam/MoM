@@ -12,15 +12,15 @@
 |------|--------|-------|
 | Next.js 16.2.6 | ✅ Installed | App Router, RSC enabled |
 | React 19.2.4 | ✅ Installed | Latest React |
-| shadcn/ui (radix-nova) | ✅ Initialized | Only `Button` component installed |
+| shadcn/ui (radix-nova) | ✅ Configured | All required components installed |
 | Tailwind CSS v4 | ✅ Configured | Using `@theme inline` blocks |
 | Biome 2.2.0 | ✅ Configured | Linting + formatting |
 | Bun | ✅ Package manager | Lockfile: `bun.lock` |
 | Fonts | ✅ Loaded | Inter (sans) + Instrument Serif (serif) |
-| Dark mode | ✅ Default | `className="dark"` on `<html>` |
-| Supabase | ❌ Not installed | Required for auth, DB, storage |
-| Routing | ❌ Only `/` exists | Placeholder page |
-| Components | ❌ Minimal | Only `Button` in `src/components/ui/` |
+| Dark mode | ✅ Default | `className="dark"` on `<html>`, next-themes added |
+| Supabase | ⚠️ Stubbed | API routes created, SSR client configured, waiting for keys |
+| Routing | ✅ Implemented | `/(auth)` and `/(app)` route groups created |
+| Components | ✅ Implemented | shadcn components added, layouts built |
 
 ### Project structure
 
@@ -377,43 +377,43 @@ src/
 
 #### Tasks
 
-1. **Install Supabase dependencies**
+1. **[x] Install Supabase dependencies**
    ```bash
    bun add @supabase/supabase-js @supabase/ssr
    ```
 
-2. **Create Supabase project** (manual step — user sets up at supabase.com)
+2. **[ ] Create Supabase project** (manual step — user sets up at supabase.com)
    - Create project
    - Get `SUPABASE_URL` and `SUPABASE_ANON_KEY`
    - Create `.env.local` with credentials
 
-3. **Set up Supabase clients**
+3. **[x] Set up Supabase clients**
    - `src/lib/supabase/client.ts` — browser client using `createBrowserClient`
    - `src/lib/supabase/server.ts` — server client using `createServerClient`
    - `src/middleware.ts` — session refresh middleware
 
-4. **Create database schema**
+4. **[ ] Create database schema**
    - Run SQL migrations in Supabase dashboard (from Section 5)
    - Enable RLS on all tables
    - Create `profiles` trigger on `auth.users` insert
 
-5. **Install required shadcn components**
+5. **[x] Install required shadcn components**
    ```bash
    bunx --bun shadcn@latest add card input field separator avatar dropdown-menu sidebar badge spinner alert
    ```
 
-6. **Build auth pages**
+6. **[x] Build auth pages**
    - `src/app/(auth)/login/page.tsx` — Email/password login form
    - `src/app/(auth)/signup/page.tsx` — Registration form
    - `src/app/api/auth/callback/route.ts` — OAuth callback handler
 
-7. **Build app layout**
+7. **[x] Build app layout**
    - `src/app/(app)/layout.tsx` — Sidebar + header layout
    - `src/components/layout/app-sidebar.tsx` — Navigation sidebar
    - `src/components/layout/app-header.tsx` — Top header with user menu
    - `src/components/layout/user-menu.tsx` — Dropdown with logout
 
-8. **Update root page**
+8. **[x] Update root page**
    - Redirect to `/dashboard` if authenticated, `/login` if not
 
 ---
@@ -424,25 +424,25 @@ src/
 
 #### Tasks
 
-1. **Install additional shadcn components**
+1. **[x] Install additional shadcn components**
    ```bash
    bunx --bun shadcn@latest add dialog empty skeleton scroll-area tooltip progress
    ```
 
-2. **Build dashboard page**
+2. **[x] Build dashboard page**
    - `src/app/(app)/dashboard/page.tsx` — Fetch and display meetings
    - `src/components/dashboard/meeting-list.tsx` — Grid/list of meeting cards
    - `src/components/dashboard/meeting-card.tsx` — Individual meeting card (title, date, status badge)
    - `src/components/dashboard/status-badge.tsx` — Color-coded processing status
    - `src/components/dashboard/new-meeting-dialog.tsx` — Dialog form for creating meetings
 
-3. **Create server actions for meetings**
+3. **[x] Create server actions for meetings** (Currently implemented as API route stubs)
    - `src/actions/meetings.ts`:
      - `createMeeting(formData)` — Insert into `meetings` table
      - `deleteMeeting(meetingId)` — Delete meeting and cascade
      - `updateMeeting(meetingId, data)` — Update title/description
 
-4. **Empty state**
+4. **[x] Empty state**
    - Use shadcn `Empty` component when no meetings exist
    - Show a clear CTA to create the first meeting
 
@@ -454,19 +454,19 @@ src/
 
 #### Tasks
 
-1. **Install additional shadcn components**
+1. **[x] Install additional shadcn components**
    ```bash
    bunx --bun shadcn@latest add tabs textarea
    ```
 
-2. **Set up Supabase Storage**
+2. **[ ] Set up Supabase Storage**
    - Create `meeting-audio` bucket (private)
    - Add storage policies for authenticated users
 
-3. **Build meeting detail page**
+3. **[x] Build meeting detail page**
    - `src/app/(app)/meeting/[id]/page.tsx` — Tabbed layout (Audio → Transcript → Summary → MoM)
 
-4. **Build audio recorder component**
+4. **[x] Build audio recorder component**
    - `src/components/meeting/audio-recorder.tsx` — Uses MediaRecorder API
    - `src/hooks/use-audio-recorder.ts` — Custom hook encapsulating:
      - `startRecording()`, `stopRecording()`, `pauseRecording()`
@@ -475,13 +475,13 @@ src/
      - Output: `Blob` (webm/wav format)
    - Must have `"use client"` directive (uses browser APIs)
 
-5. **Build audio uploader component**
+5. **[x] Build audio uploader component**
    - `src/components/meeting/audio-uploader.tsx` — Drag-and-drop zone
    - File validation: format (mp3/wav/m4a/webm/ogg), size (max 50MB)
    - Upload progress indicator
    - Upload to Supabase Storage, save URL to `audio_files` table
 
-6. **Build processing status component**
+6. **[x] Build processing status component**
    - `src/components/meeting/processing-status.tsx` — Step indicator showing:
      - `uploaded` → `transcribing` → `summarizing` → `completed`
    - Use shadcn `Progress` + `Badge` components
@@ -494,16 +494,16 @@ src/
 
 #### Tasks
 
-1. **Install Groq SDK**
+1. **[ ] Install Groq SDK**
    ```bash
    bun add groq-sdk
    ```
 
-2. **Set up Groq client**
+2. **[ ] Set up Groq client**
    - `src/lib/groq.ts` — Initialize Groq client with API key from env
    - Add `GROQ_API_KEY` to `.env.local`
 
-3. **Build transcription API route**
+3. **[x] Build transcription API route** (Stubbed)
    - `src/app/api/transcribe/route.ts`:
      - Accepts `meeting_id`
      - Fetches audio from Supabase Storage
@@ -512,10 +512,10 @@ src/
      - Updates meeting status to `transcribing` → `transcribed`
      - Returns transcript text
 
-4. **Build server action**
+4. **[ ] Build server action**
    - `src/actions/transcribe.ts` — Triggers transcription, handles errors and retries
 
-5. **Build transcript panel**
+5. **[x] Build transcript panel**
    - `src/components/meeting/transcript-panel.tsx`:
      - Display transcript text in a readable format
      - Editable mode (save edited text to `edited_text` column)
@@ -530,7 +530,7 @@ src/
 
 #### Tasks
 
-1. **Build summarization API route**
+1. **[x] Build summarization API route** (Stubbed)
    - `src/app/api/summarize/route.ts`:
      - Accepts `meeting_id`
      - Fetches transcript (edited version if available) from DB
@@ -540,7 +540,7 @@ src/
      - Saves MoM to `moms` table
      - Updates meeting status to `completed`
 
-2. **Design AI prompts**
+2. **[ ] Design AI prompts**
    - Summary prompt: Extract key discussion points, decisions, action items
    - MoM prompt: Format into structured MoM document with:
      - Meeting title, date, attendees
@@ -550,16 +550,16 @@ src/
      - Action items with owners
      - Next steps
 
-3. **Build server action**
+3. **[ ] Build server action**
    - `src/actions/generate-mom.ts` — Orchestrates summary + MoM generation
 
-4. **Build summary panel**
+4. **[x] Build summary panel**
    - `src/components/meeting/summary-panel.tsx`:
      - Display AI-generated summary
      - Key points, decisions, action items as separate sections
      - Use shadcn `Card` + `Separator`
 
-5. **Build MoM preview**
+5. **[x] Build MoM preview**
    - `src/components/meeting/mom-preview.tsx`:
      - Professional document-style layout
      - Editable sections

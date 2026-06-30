@@ -4,7 +4,6 @@ import { createClient } from "@/lib/supabase/server"
 export async function GET(request: Request) {
   const supabase = await createClient()
 
-  // Ensure user is authenticated
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -33,7 +32,10 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
-    const { title, date, description, status } = body
+    const title: string = body.title
+    const date: string | null = body.date ?? null
+    const description: string | null = body.description ?? null
+    const status: string = body.status ?? "processing"
 
     if (!title) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 })
@@ -41,15 +43,13 @@ export async function POST(request: Request) {
 
     const { data: meeting, error } = await supabase
       .from("meetings")
-      .insert([
-        {
-          user_id: user.id,
-          title,
-          date: date || null,
-          description: description || null,
-          status: status || "processing"
-        }
-      ])
+      .insert({
+        user_id: user.id,
+        title,
+        date,
+        description,
+        status,
+      })
       .select()
       .single()
 

@@ -11,7 +11,9 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
-    const { meeting_id, transcript_text, edited_text } = body
+    const meeting_id: string = body.meeting_id
+    const transcript_text: string = body.transcript_text
+    const edited_text: string | null = body.edited_text ?? null
 
     if (!meeting_id || !transcript_text) {
       return NextResponse.json({ error: "meeting_id and transcript_text are required" }, { status: 400 })
@@ -19,13 +21,11 @@ export async function POST(request: Request) {
 
     const { data: transcript, error } = await supabase
       .from("transcripts")
-      .insert([
-        {
-          meeting_id,
-          transcript_text,
-          edited_text: edited_text || null
-        }
-      ])
+      .insert({
+        meeting_id,
+        transcript_text,
+        edited_text,
+      })
       .select()
       .single()
 
@@ -49,7 +49,8 @@ export async function PATCH(request: Request) {
 
   try {
     const body = await request.json()
-    const { transcript_id, edited_text } = body
+    const transcript_id: string = body.transcript_id
+    const edited_text: string | null = body.edited_text ?? null
 
     if (!transcript_id || !edited_text) {
       return NextResponse.json({ error: "transcript_id and edited_text are required" }, { status: 400 })
@@ -59,7 +60,7 @@ export async function PATCH(request: Request) {
       .from("transcripts")
       .update({
         edited_text,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq("transcript_id", transcript_id)
       .select()

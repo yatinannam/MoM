@@ -6,6 +6,14 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
+export type Relationship = {
+  foreignKeyName: string
+  columns: string[]
+  isOneToOne?: boolean
+  referencedRelation: string
+  referencedColumns: string[]
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -28,6 +36,7 @@ export interface Database {
           email?: string | null
           created_at?: string | null
         }
+        Relationships: []
       }
       meetings: {
         Row: {
@@ -60,6 +69,15 @@ export interface Database {
           created_at?: string | null
           updated_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "meetings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       audio_files: {
         Row: {
@@ -86,6 +104,15 @@ export interface Database {
           file_size?: number | null
           created_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "audio_files_meeting_id_fkey"
+            columns: ["meeting_id"]
+            isOneToOne: false
+            referencedRelation: "meetings"
+            referencedColumns: ["meeting_id"]
+          }
+        ]
       }
       transcripts: {
         Row: {
@@ -112,6 +139,15 @@ export interface Database {
           created_at?: string | null
           updated_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "transcripts_meeting_id_fkey"
+            columns: ["meeting_id"]
+            isOneToOne: false
+            referencedRelation: "meetings"
+            referencedColumns: ["meeting_id"]
+          }
+        ]
       }
       summaries: {
         Row: {
@@ -132,6 +168,15 @@ export interface Database {
           summary_text?: string
           created_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "summaries_meeting_id_fkey"
+            columns: ["meeting_id"]
+            isOneToOne: false
+            referencedRelation: "meetings"
+            referencedColumns: ["meeting_id"]
+          }
+        ]
       }
       moms: {
         Row: {
@@ -155,6 +200,15 @@ export interface Database {
           created_at?: string | null
           updated_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "moms_meeting_id_fkey"
+            columns: ["meeting_id"]
+            isOneToOne: false
+            referencedRelation: "meetings"
+            referencedColumns: ["meeting_id"]
+          }
+        ]
       }
     }
     Views: {

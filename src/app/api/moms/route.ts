@@ -11,7 +11,8 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
-    const { meeting_id, mom_content } = body
+    const meeting_id: string = body.meeting_id
+    const mom_content: string = body.mom_content
 
     if (!meeting_id || !mom_content) {
       return NextResponse.json({ error: "meeting_id and mom_content are required" }, { status: 400 })
@@ -19,12 +20,10 @@ export async function POST(request: Request) {
 
     const { data: mom, error } = await supabase
       .from("moms")
-      .insert([
-        {
-          meeting_id,
-          mom_content
-        }
-      ])
+      .insert({
+        meeting_id,
+        mom_content,
+      })
       .select()
       .single()
 

@@ -11,7 +11,10 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
-    const { meeting_id, storage_url, file_name, file_size } = body
+    const meeting_id: string = body.meeting_id
+    const storage_url: string = body.storage_url
+    const file_name: string | null = body.file_name ?? null
+    const file_size: number | null = body.file_size ?? null
 
     if (!meeting_id || !storage_url) {
       return NextResponse.json({ error: "meeting_id and storage_url are required" }, { status: 400 })
@@ -19,14 +22,12 @@ export async function POST(request: Request) {
 
     const { data: audioFile, error } = await supabase
       .from("audio_files")
-      .insert([
-        {
-          meeting_id,
-          storage_url,
-          file_name: file_name || null,
-          file_size: file_size || null
-        }
-      ])
+      .insert({
+        meeting_id,
+        storage_url,
+        file_name,
+        file_size,
+      })
       .select()
       .single()
 

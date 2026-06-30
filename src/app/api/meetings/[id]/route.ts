@@ -1,12 +1,17 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
+import type { Database } from "@/lib/types/database"
+
+type MeetingUpdate = Database["public"]["Tables"]["meetings"]["Update"]
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } | Promise<{ id: string }> }
 ) {
   const supabase = await createClient()
-  const { id } = params
+  const params = context.params
+  const resolvedParams = (params && typeof (params as any).then === "function") ? await params as { id: string } : params as { id: string }
+  const { id } = resolvedParams
 
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
@@ -29,10 +34,12 @@ export async function GET(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } | Promise<{ id: string }> }
 ) {
   const supabase = await createClient()
-  const { id } = params
+  const params = context.params
+  const resolvedParams = (params && typeof (params as any).then === "function") ? await params as { id: string } : params as { id: string }
+  const { id } = resolvedParams
 
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
@@ -41,14 +48,13 @@ export async function PATCH(
 
   try {
     const body = await request.json()
-    
-    // Only allow updating specific fields
-    const updateData: any = {}
+    const updateData: MeetingUpdate = {
+      updated_at: new Date().toISOString(),
+    }
     if (body.title !== undefined) updateData.title = body.title
     if (body.date !== undefined) updateData.date = body.date
     if (body.description !== undefined) updateData.description = body.description
     if (body.status !== undefined) updateData.status = body.status
-    updateData.updated_at = new Date().toISOString()
 
     const { data: meeting, error } = await supabase
       .from("meetings")
